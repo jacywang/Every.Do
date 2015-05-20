@@ -15,6 +15,8 @@
 		9CA651441B0D05D100812F6F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA651431B0D05D100812F6F /* Images.xcassets */; };
 		9CA651471B0D05D100812F6F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CA651451B0D05D100812F6F /* LaunchScreen.xib */; };
 		9CA651531B0D05D100812F6F /* Every_DoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA651521B0D05D100812F6F /* Every_DoTests.m */; };
+		9CA6515E1B0D07B100812F6F /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA6515D1B0D07B100812F6F /* Todo.m */; };
+		9CA651611B0D0B7900812F6F /* ToDoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA651601B0D0B7900812F6F /* ToDoCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,10 @@
 		9CA6514C1B0D05D100812F6F /* Every.DoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Every.DoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA651511B0D05D100812F6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CA651521B0D05D100812F6F /* Every_DoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Every_DoTests.m; sourceTree = "<group>"; };
+		9CA6515C1B0D07B100812F6F /* Todo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Todo.h; sourceTree = "<group>"; };
+		9CA6515D1B0D07B100812F6F /* Todo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Todo.m; sourceTree = "<group>"; };
+		9CA6515F1B0D0B7900812F6F /* ToDoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToDoCell.h; sourceTree = "<group>"; };
+		9CA651601B0D0B7900812F6F /* ToDoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToDoCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +96,10 @@
 				9CA6513B1B0D05D100812F6F /* MasterViewController.m */,
 				9CA6513D1B0D05D100812F6F /* DetailViewController.h */,
 				9CA6513E1B0D05D100812F6F /* DetailViewController.m */,
+				9CA6515F1B0D0B7900812F6F /* ToDoCell.h */,
+				9CA651601B0D0B7900812F6F /* ToDoCell.m */,
+				9CA6515C1B0D07B100812F6F /* Todo.h */,
+				9CA6515D1B0D07B100812F6F /* Todo.m */,
 				9CA651401B0D05D100812F6F /* Main.storyboard */,
 				9CA651431B0D05D100812F6F /* Images.xcassets */,
 				9CA651451B0D05D100812F6F /* LaunchScreen.xib */,
@@ -224,10 +234,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CA6515E1B0D07B100812F6F /* Todo.m in Sources */,
 				9CA651391B0D05D100812F6F /* AppDelegate.m in Sources */,
 				9CA6513C1B0D05D100812F6F /* MasterViewController.m in Sources */,
 				9CA651361B0D05D100812F6F /* main.m in Sources */,
 				9CA6513F1B0D05D100812F6F /* DetailViewController.m in Sources */,
+				9CA651611B0D0B7900812F6F /* ToDoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

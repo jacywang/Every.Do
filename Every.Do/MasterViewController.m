@@ -8,10 +8,13 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "Todo.h"
+#import "ToDoCell.h"
 
 @interface MasterViewController ()
 
-@property NSMutableArray *objects;
+@property NSMutableArray *toDoList;
+
 @end
 
 @implementation MasterViewController
@@ -23,6 +26,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    Todo *toDo1 = [[Todo alloc] initWithTitle:@"To do 1" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:1];
+    Todo *toDo2 = [[Todo alloc] initWithTitle:@"To do 2" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:3];
+    Todo *toDo3 = [[Todo alloc] initWithTitle:@"To do 3" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:2];
+    Todo *toDo4 = [[Todo alloc] initWithTitle:@"To do 4" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:3];
+    Todo *toDo5 = [[Todo alloc] initWithTitle:@"To do 5" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:1];
+    toDo5.isCompleted = YES;
+    
+    self.toDoList = [[NSMutableArray alloc] initWithArray:@[toDo1, toDo2, toDo3, toDo4, toDo5]];
+    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
@@ -35,10 +47,10 @@
 }
 
 - (void)insertNewObject:(id)sender {
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
+    if (!self.toDoList) {
+        self.toDoList = [[NSMutableArray alloc] init];
     }
-    [self.objects insertObject:[NSDate date] atIndex:0];
+    [self.toDoList insertObject:[NSDate date] atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -48,7 +60,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.objects[indexPath.row];
+        NSDate *object = self.toDoList[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
     }
 }
@@ -60,14 +72,31 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    return self.toDoList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    ToDoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    Todo *item = self.toDoList[indexPath.row];
+    NSString *pnString = [NSString stringWithFormat:@"%d", item.priorityNumber];
+    
+    if (item.isCompleted) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        NSDictionary *attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlinePatternSolid | NSUnderlineStyleSingle]};
+        NSAttributedString *titleAttributedString = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
+        NSAttributedString *detailsAttributedString = [[NSAttributedString alloc] initWithString:item.details attributes:attributes];
+        NSAttributedString *pnAttributedString = [[NSAttributedString alloc] initWithString:pnString attributes:attributes];
+        
+        cell.titleLabel.attributedText = titleAttributedString;
+        cell.detailsLabel.attributedText = detailsAttributedString;
+        cell.priorityNumberLabel.attributedText = pnAttributedString;
+    } else {
+        cell.titleLabel.text = item.title;
+        cell.detailsLabel.text = item.details;
+        cell.priorityNumberLabel.text = pnString;
+    }
     return cell;
 }
 
@@ -78,7 +107,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.objects removeObjectAtIndex:indexPath.row];
+        [self.toDoList removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
