@@ -10,8 +10,9 @@
 #import "DetailViewController.h"
 #import "Todo.h"
 #import "ToDoCell.h"
+#import "AddToDoViewController.h"
 
-@interface MasterViewController ()
+@interface MasterViewController ()  <addToDoViewControllerDelegate>
 
 @property NSMutableArray *toDoList;
 
@@ -36,9 +37,6 @@
     self.toDoList = [[NSMutableArray alloc] initWithArray:@[toDo1, toDo2, toDo3, toDo4, toDo5]];
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,14 +44,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender {
-    if (!self.toDoList) {
-        self.toDoList = [[NSMutableArray alloc] init];
-    }
-    [self.toDoList insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+- (void)addToDoViewController:(AddToDoViewController *)addToDoViewController didSaveToDo:(Todo *)item {
+    [self.toDoList addObject:item];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.toDoList.count - 1 inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 #pragma mark - Segues
 
@@ -61,7 +58,11 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Todo *item = self.toDoList[indexPath.row];
+        
         [[segue destinationViewController] setDetailItem:item];
+    } else if ([segue.identifier isEqualToString:@"addToDo"]) {
+        AddToDoViewController *addToDoViewController = segue.destinationViewController;
+        addToDoViewController.delegate = self;
     }
 }
 
