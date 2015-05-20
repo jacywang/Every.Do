@@ -37,6 +37,17 @@
     self.toDoList = [[NSMutableArray alloc] initWithArray:@[toDo1, toDo2, toDo3, toDo4, toDo5]];
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCell:)];
+    [self.tableView addGestureRecognizer:swipeGesture];
+}
+
+-(IBAction)swipeCell:(UISwipeGestureRecognizer *)sender {
+    CGPoint point = [sender locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    [self.toDoList[indexPath.row] setIsCompleted:YES];
+//    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
