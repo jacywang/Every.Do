@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Todo;
 
 @interface DetailViewController : UIViewController
 
-@property (strong, nonatomic) id detailItem;
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (strong, nonatomic) Todo *detailItem;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priorityNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *completedLabel;
 
 @end
 

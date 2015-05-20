@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "Todo.h"
 
 @interface DetailViewController ()
 
@@ -28,7 +29,14 @@
 - (void)configureView {
     // Update the user interface for the detail item.
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+        self.titleLabel.text = self.detailItem.title;
+        self.detailLabel.text = self.detailItem.details;
+        self.priorityNumberLabel.text = [NSString stringWithFormat:@"%d", self.detailItem.priorityNumber];
+        if (self.detailItem.isCompleted) {
+            self.completedLabel.text = @"YES";
+        } else {
+            self.completedLabel.text = @"NO";
+        }
     }
 }
 
