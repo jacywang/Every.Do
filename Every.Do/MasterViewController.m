@@ -27,19 +27,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    Todo *toDo1 = [[Todo alloc] initWithTitle:@"To do 1" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:1];
-    Todo *toDo2 = [[Todo alloc] initWithTitle:@"To do 2" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:3];
-    Todo *toDo3 = [[Todo alloc] initWithTitle:@"To do 3" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:2];
-    Todo *toDo4 = [[Todo alloc] initWithTitle:@"To do 4" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:3];
-    Todo *toDo5 = [[Todo alloc] initWithTitle:@"To do 5" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:1];
-    toDo5.isCompleted = YES;
+//    Todo *toDo1 = [[Todo alloc] initWithTitle:@"To do 1" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:1];
+//    Todo *toDo2 = [[Todo alloc] initWithTitle:@"To do 2" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:3];
+//    Todo *toDo3 = [[Todo alloc] initWithTitle:@"To do 3" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:2];
+//    Todo *toDo4 = [[Todo alloc] initWithTitle:@"To do 4" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:3];
+//    Todo *toDo5 = [[Todo alloc] initWithTitle:@"To do 5" details:@"You need to complete this task asap today! We are looking forward to it!" priorityNumber:1];
+//    toDo5.isCompleted = YES;
+//    
+//    self.toDoList = [[NSMutableArray alloc] initWithArray:@[toDo1, toDo2, toDo3, toDo4, toDo5]];
     
-    self.toDoList = [[NSMutableArray alloc] initWithArray:@[toDo1, toDo2, toDo3, toDo4, toDo5]];
+    if (!self.toDoList) {
+        self.toDoList = [[NSMutableArray alloc] init];
+    }
+    
+    NSMutableArray *savedList = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getFilePath]];
+    if (savedList) {
+        self.toDoList = savedList;
+    }
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCell:)];
     [self.tableView addGestureRecognizer:swipeGesture];
+}
+
+- (NSString *)getFilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectoryPath = [paths firstObject];
+    return [documentDirectoryPath stringByAppendingPathComponent:@"appData"];
 }
 
 -(IBAction)swipeCell:(UISwipeGestureRecognizer *)sender {
@@ -57,6 +72,7 @@
 
 - (void)addToDoViewController:(AddToDoViewController *)addToDoViewController didSaveToDo:(Todo *)item {
     [self.toDoList addObject:item];
+    [NSKeyedArchiver archiveRootObject:self.toDoList toFile:[self getFilePath]];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.toDoList.count - 1 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
