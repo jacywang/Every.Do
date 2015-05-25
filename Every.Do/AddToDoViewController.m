@@ -18,6 +18,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.titleLabel.text = [userDefaults objectForKey:@"Title"];
+    self.detailLabel.text = [userDefaults objectForKey:@"Details"];
+    self.priorityLabel.text = [NSString stringWithFormat:@"%ld",(long)[userDefaults integerForKey:@"PriorityNumber"]];
 }
 
 - (void)didReceiveMemoryWarning {

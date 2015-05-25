@@ -47,6 +47,14 @@
     
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCell:)];
     [self.tableView addGestureRecognizer:swipeGesture];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    Todo *item = [[Todo alloc] initWithTitle:@"Item1" details:@"Description for Item1" priorityNumber:1];
+    [userDefaults setObject:item.title forKey:@"Title"];
+    [userDefaults setObject:item.details forKey:@"Details"];
+    [userDefaults setInteger:item.priorityNumber forKey:@"PriorityNumber"];
+    [userDefaults setBool:item.isCompleted forKey:@"IsCompleted"];
+    [userDefaults synchronize];
 }
 
 - (NSString *)getFilePath {
