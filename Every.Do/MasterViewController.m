@@ -45,7 +45,7 @@
         self.toDoList = savedList;
     }
     
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCell:)];
     [self.tableView addGestureRecognizer:swipeGesture];
@@ -76,6 +76,10 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.toDoList.count - 1 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)didSaveList:(UIBarButtonItem *)sender {
+    [NSKeyedArchiver archiveRootObject:self.toDoList toFile:[self getFilePath]];
 }
 
 
