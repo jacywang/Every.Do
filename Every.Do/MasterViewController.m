@@ -47,7 +47,7 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
     [self.toDoList[indexPath.row] setIsCompleted:YES];
 //    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
-    [self.tableView reloadData];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
 }
 
 - (void)didReceiveMemoryWarning {
