@@ -14,8 +14,6 @@
 
 @interface MasterViewController ()  <addToDoViewControllerDelegate>
 
-@property NSMutableArray *toDoList;
-
 @end
 
 @implementation MasterViewController
@@ -45,7 +43,7 @@
         self.toDoList = savedList;
     }
     
-//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeCell:)];
     [self.tableView addGestureRecognizer:swipeGesture];
@@ -72,7 +70,6 @@
 
 - (void)addToDoViewController:(AddToDoViewController *)addToDoViewController didSaveToDo:(Todo *)item {
     [self.toDoList addObject:item];
-    [NSKeyedArchiver archiveRootObject:self.toDoList toFile:[self getFilePath]];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.toDoList.count - 1 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
     [self dismissViewControllerAnimated:YES completion:nil];

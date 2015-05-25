@@ -10,5 +10,9 @@
 
 @interface MasterViewController : UITableViewController
 
+@property NSMutableArray *toDoList;
+
+- (NSString *)getFilePath;
+
 @end
 

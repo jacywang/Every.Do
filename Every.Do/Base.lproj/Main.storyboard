@@ -72,11 +72,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="To Do List" id="tQt-TN-PWz">
-                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="1oo-RV-UFN">
-                            <connections>
-                                <action selector="didSaveList:" destination="pGg-6v-bdr" id="cTW-q9-8nX"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Q15-wQ-0bA">
                             <connections>
                                 <segue destination="JTe-Oj-1jB" kind="presentation" identifier="addToDo" id="bAk-rd-mRl"/>
